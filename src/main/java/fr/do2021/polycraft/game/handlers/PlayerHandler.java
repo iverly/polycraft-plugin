@@ -20,6 +20,12 @@ public class PlayerHandler {
 
     public void initPlayer(Player player) {
         this.broadcast(ChatColor.GRAY + player.getName() + " a rejoint le serveur");
+
+        if (!this.isPlayerRegistered(player)) {
+            this.setUnregisteredProperties(player);
+            this.teleportToVoid(player);
+            player.sendMessage(I18N.CallToAction.EXPLANATION_MESSAGE);
+        }
     }
 
     public void unloadPlayer(Player player) {
@@ -56,6 +62,11 @@ public class PlayerHandler {
     private void teleportToVoid(Player player) {
         Location location = new Location(player.getWorld(), 0f, -100f, 0f);
         player.teleport(location);
+    }
+
+    public boolean isPlayerRegistered(Player player) {
+        PlayerVerification playerVerification = this.plugin.getVerificationManager().getPlayerVerification(player.getUniqueId());
+        return playerVerification.getState() == VerificationState.REGISTERED;
     }
 
     public void broadcast(String message) {

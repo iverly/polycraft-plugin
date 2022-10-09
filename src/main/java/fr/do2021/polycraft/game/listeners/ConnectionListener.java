@@ -19,6 +19,7 @@ public class ConnectionListener implements Listener {
         Player player = e.getPlayer();
 
         // init player
+        this.plugin.getVerificationHandler().initPlayer(player);
         this.plugin.getPlayerHandler().initPlayer(player);
     }
 
@@ -28,6 +29,7 @@ public class ConnectionListener implements Listener {
         Player player = e.getPlayer();
 
         // init player
+        this.plugin.getVerificationHandler().unloadPlayer(player);
         this.plugin.getPlayerHandler().unloadPlayer(player);
     }
 
