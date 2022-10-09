@@ -1,0 +1,8 @@
+name: Polycraft
+version: '${version}'
+main: fr.do2021.polycraft.PolycraftPlugin
+api-version: 1.19
+prefix: Polycraft
+authors: [ iverly ]
+description: Spigot plugin for Polycraft server
+website: do-2021.fr
