@@ -1,7 +1,11 @@
 package fr.do2021.polycraft.utils;
 
+import fr.do2021.polycraft.verification.PlayerVerification;
+import fr.do2021.polycraft.verification.VerificationState;
 import lombok.RequiredArgsConstructor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.entity.Player;
 
 import javax.mail.PasswordAuthentication;
 import java.util.Objects;
@@ -9,6 +13,36 @@ import java.util.Properties;
 
 @RequiredArgsConstructor
 public class ConfigUtils {
+
+    public static PlayerVerification getPlayerVerification(Configuration configuration, Player player) {
+        String rootKey = "player-data." + player.getUniqueId();
+        if (!configuration.contains(rootKey)) {
+            PlayerVerification playerVerification = new PlayerVerification(
+                    player.getUniqueId(),
+                    VerificationState.UNREGISTERED,
+                    "",
+                    ""
+            );
+
+            ConfigUtils.savePlayerVerification(configuration, playerVerification);
+            return playerVerification;
+        }
+
+        return new PlayerVerification(
+            player.getUniqueId(),
+            VerificationState.valueOf(configuration.getString(rootKey + ".verification.state")),
+            configuration.getString(rootKey + ".verification.email"),
+            configuration.getString(rootKey + ".verification.verification-code")
+        );
+    }
+
+    public static void savePlayerVerification(Configuration config, PlayerVerification playerVerification) {
+        String rootKey = "player-data." + playerVerification.getUniqueId();
+        config.set(rootKey + ".verification.state", playerVerification.getState().toString());
+        config.set(rootKey + ".verification.email", playerVerification.getEmail());
+        config.set(rootKey + ".verification.verification-code", playerVerification.getVerificationCode());
+        ConfigUtils.saveConfig();
+    }
 
     public static Properties getSMTPProperties(Configuration configuration) {
         String rootKey = "smtp";
