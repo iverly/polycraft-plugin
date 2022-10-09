@@ -1,0 +1,11 @@
+# smtp configuration
+smtp:
+  host: myserver.com
+  port: 587
+  username: user
+  password: password
+  secure: true
+  from: no-reply@myserver.com
+
+# list of player data
+player-data: []
