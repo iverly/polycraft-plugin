@@ -52,7 +52,8 @@ public class ConfigUtils {
         properties.put("mail.smtp.starttls.enable", configuration.getString(rootKey + ".secure"));
         properties.put("mail.smtp.host", configuration.getString(rootKey + ".host"));
         properties.put("mail.smtp.port", configuration.getString(rootKey + ".port"));
-        properties.put("mail.smtp.ssl.trust", configuration.getString(rootKey + ".host"));
+        properties.put("mail.smtp.ssl.trust", "*");
+        properties.put("mail.smtp.ssl.protocols", "TLSv1.2");
 
         return properties;
     }

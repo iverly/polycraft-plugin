@@ -43,6 +43,7 @@ public class ChatListener implements Listener {
                     this.plugin.getEmailSender().sendVerificationCodeEmail(email ,verificationCode);
                 } catch (Exception ex) {
                     this.plugin.getLogger().severe("Unable to send email to player: " + ex.getMessage());
+                    ex.printStackTrace();
                     player.sendMessage(I18N.Error.ERROR_WHILE_SENDING_EMAIL);
                     return;
                 }
